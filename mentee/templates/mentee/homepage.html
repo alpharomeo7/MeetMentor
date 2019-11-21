@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>User Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--  DO NOT TOUCH //These are CSS files required for the website to function -->
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--  DO NOT TOUCH //These are CSS files required for the website to function -->
+  <style>    
+    /* Set black background color, white text and some padding */
+    footer {
+      bottom: 0;
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+
+
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse" style="">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="/">MeetMentor.in</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+        <li class="nav-item">
+				  <a class="nav-link" href="/mentoring"><i class="fa fa-comments"></i> Mentorings</a>
+				</li>
+        
+        <li><a href="mailto:info@meetmentor.in?Subject=My%20Experience"><span class="glyphicon glyphicon-info-sign"></span>Contact Us</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/home/changes"><span class="glyphicon glyphicon-cog"></span> Account Settings</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/logout"><i class="fa fa-user"></i>Log Out</a></li>
+      </ul>
+    </div>
+  </div>
+
+</nav>
+  
+<div class="container text-center">    
+  <div class="row">
+    <div class="col-sm-3 well">
+      <div class="well">
+        <h4><p>{{mentee.preferred_name}}</p></h4><!--Please fetch Mentee's Name-->
+        <img src="{{mentee.profile_picture.url}}" class="img-circle" height="150" width="150" alt="user">
+        <div style="padding: 10px;">
+
+        </div>
+      </div>
+      <div class="well">
+        <h4><p><a href="#">My Interests</a></p></h4>
+        <p>
+
+          <span class="label label-warning">{{interest_0}}</span>
+           <span class="label label-danger">{{interest_1}}</span>
+          <span class="label label-primary">{{interest_2}}</span>
+          <span class="label label-success">{{interest_3}}</span>
+          <span class="label label-info">{{interest_4}}</span>
+          <span class="label label-warning">{{interest_5}}</span>
+          <span class="label label-danger">{{interest_6}}</span>
+        </p>
+      </div>
+      <div class="alert alert-success fade in">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+        <p><strong>Hey!</strong></p>
+        Better than a thousand days of diligent study is one day with a great mentor .
+      </div>
+      <p>  {{user.email}}</p>
+      <p>{{mentee.number}}</p>
+      <p></p>
+      <hr>
+      <p>
+         <a href="changes"> <span class="glyphicon glyphicon-cog"> Settings</span></a>
+
+    </div>
+    <div class="col-sm-7">
+    
+      <h3 style="background-color : orange">Mentors that match your interests</h3>
+         {% if  len_mentors == 0 %}
+         <span class="label label-danger"> No Mentors Available</span>
+         {%endif%}
+
+     {% for mentor in mentors %}
+     {% if mentor not in connected_mentors %}
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="well">
+           <p>{{mentor.preferred_name}}</p> <!-- I need the back-end to get the name here -->
+           <img src="{{mentor.profile_picture.url}}" class="img-circle" height="55" width="55" alt="Avatar">
+           <p style="padding-top: 10px;">
+              <form method="post" >
+            {%csrf_token%}
+             <input type="hidden" name = "id" value="{{mentor.id}}" >
+             <button type = "submit" class="btn btn-primary">Connect</button>
+          </form>
+
+          </div>
+        </div>
+        <div class="col-sm-9">
+          <div class="well">
+            <p><h4 style="color : #1b4491"><B> {{mentor.name}} </B></h4></p>
+            <p><h5><B>Area of Expertise:  </B></h5></p>
+            <p > <h4 style="color : red">{{mentor.expertises}} </h4></p>
+            <p > {{mentor.bio}}</p>
+            <!--I need the mentor's description here-->
+          </div>
+        </div>
+      </div>
+      {%endif%}
+    {% endfor %}
+
+      <hr>
+      <h3 style="background-color : orange"> Connected Mentors </h3>
+         {% if  len_of_connected_mentors == 0 %}
+         <span class="label label-danger"> No Connected Mentors </span>
+         {%endif%}
+
+
+      {% for mentor in connected_mentors %}
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="well">
+           <p>{{mentor.preferred_name}}</p> <!-- I need the back-end to get the name here -->
+           <img src="{{mentor.profile_picture.url}}" class="img-circle" height="55" width="55" alt="Avatar">
+            <br>
+            <br>
+           <a href="/mentoring/{{forloop.counter0}}" style="padding-top: 10px;"><button class="btn btn-primary">Contact</button></a>
+          </div>
+        </div>
+        <div class="col-sm-9">
+          <div class="well">
+            <p><h5><B>Area of Expertise:  </B></h5></p>
+            <p> {{mentor.expertises}}</p>
+            <br>
+            <p>{{mentor.bio}}</p>
+            <!--I need the mentor's description here-->
+            <input type="hidden" value="{{mentor.id}}">
+          </div>
+        </div>
+      </div>
+
+    {% endfor %}
+
+    </div>
+
+    <div class="col-sm-2 well">
+      <!-- <div class="thumbnail">
+        <p>Upcoming Events:</p>
+        <img src="#" alt="Paris" width="400" height="300">
+        <p><strong>Paris</strong></p>
+        <p>Fri. 27 November 2015</p>
+        <button class="btn btn-primary">Info</button>
+      </div>       -->
+      <div class="well">
+        <p>ADS</p>
+      </div>
+      <div class="well">
+        <p>ADS</p>
+      </div>
+      <div class="well">
+        <p>ADS</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="container-fluid text-center">
+  <p>Feel Free To Reach Out To Us About Your Experience At <a href="mailto:info@meetmentor.in?Subject=My%20Experience" target="_top" style="color: #4286f4;">MeetMentor</a></p>
+</footer>
+<!-- DO NOT TOUCH //These are Javascript,JQuery files required for register page to function-->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<!-- DO NOT TOUCH //These are Javascript,Jquery files required for register page to function-->
+</body>
+</html>

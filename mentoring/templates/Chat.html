@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+{%load static%}
+<head>
+	<title>CHAT</title>
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'Chat.css' %}">
+
+	<style type="text/css">
+		.text{
+			text-align: center;
+			font-size: 20px;
+		}
+		.ScrollStyle
+		{
+   		 	max-height: 800px;
+
+		}
+		#scroll{
+			max-height: 580px;
+			overflow-y: scroll;
+		}
+	</style>
+</head>
+<body>
+	<nav class="navbar navbar-expand-md  navbar-dark fixed-top" style="background-color: #555" > <!--bg-dark disabled-->
+
+		<a class="navbar-brand" href="#"><h2>Meet Mentor.in</h2></a>
+
+		<!-- Toggler/collapsibe Button -->
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+		  <span class="navbar-toggler-icon"></span>
+		</button>
+
+		<!-- Navbar links -->
+		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+		  <ul class="navbar-nav">
+			<li class="nav-item">
+			  <a class="nav-link" href="/home"><i class="fa fa-home"></i> Home</a>
+			</li>
+			<li class="active">
+				  <a class="nav-link" href="#"><i class="fa fa-comments"></i> Mentoring</a>
+				</li>
+			{%if request.user.isMentee %}
+			<li class="nav-item">
+			  <a class="nav-link" href="/home/changes"><i class="fa fa-cog"></i> Account Settings</a>
+			</li>
+			  {%endif%}
+			</ul>
+			<ul class="nav navbar-nav ml-auto">
+
+			<li class="nav-item">
+			  <a class="nav-link" href="/logout"></i> Logout <i class="fa fa-user"></i></a>
+			</li>
+			 </ul>
+		</div>
+	  </nav>
+		  <!-- End of nav bar -->
+		  <!-- This is the end of the navigation bar -->
+				  <!--The start of My profile settings-->
+
+
+
+
+<!-- First Row	 -->
+<div class="row">
+   <div class="col-12 text border" style = "margin-top: 90px; "><i class="fa fa-comments"></i> Mentorings</div><hr>
+
+</div>
+<!-- End of First Row -->
+
+<!-- Start of second row -->
+<div class="row">
+  <div class="col-4 text">
+  	<!-- Search Bar -->
+  	<div class="input-group" style="padding-left: 10px; padding-top: 10px;">
+
+      <div class="input-group-append">
+
+      </div>
+  </div><br>
+	<!-- search bar ends -->
+
+	<div class ="container" style="background-color: white;" id ="scroll">
+	<h3 class="text-center">Connected Mentors</h3>	<hr>
+    {%for client in clients%}
+  	<div style="background-color: white;border-color: grey; text-align: left; margin-left:5px;padding-left:50px ;padding-top: 5px;">
+
+		<img src="{{client.profile_picture.url}}" alt="Avatar" width = 35 >
+		<br>
+
+		<a href="/mentoring/{{ forloop.counter0 }} " >{{client.preferred_name}}       </a>
+		<br>
+  	</div><hr>
+
+ {%endfor%}
+
+
+</div>
+	</div>
+
+  <div class="col-6 border ScrollStyle" style="height: 900px; margin-top:10px;">
+
+
+<center>
+	   <img class = "center" src="{{chosen_client.profile_picture.url}}" style="width:60px;height:60px;">
+</center>
+	   <h4 align="center" ><p style="margin-top:10px;">{{chosen_client.preferred_name}}</p>
+
+
+
+
+<hr style></h4>
+
+  	<div class="container" style="background-color:#DDDDDC ; border:0px;" id="scroll">
+		<script >
+			window.scrollTo(0,document.body.scrollHeight);
+		</script>
+
+
+   {%for  mentoring in mentorings%}
+		{% if mentoring.sender == user %}
+				<div class="container" style="background-color: white; border-color:white;">
+
+  					<p align = "right">{{mentoring.message}}</p>
+  				</div>
+		{%endif%}
+		{% if mentoring.sender != user %}
+		<div class="container" style="background-color: white; border-color: white;">
+
+  					<p>{{mentoring.message}}</p>
+				</div>
+		{%endif%}
+
+
+{%endfor%}
+
+
+
+
+
+		</div>
+		<div class="form-group" style="padding-top: 10px;">
+			<form method = "post" >
+				{%csrf_token%}
+			<textarea name = "message" class="form-control" placeholder="Type a messsage..." ></textarea>
+            <input name = "reciever" type="hidden" value="{{chosen_client.user.email}}">
+			<p></p>
+			<button type="submit" class="btn btn-success float-right">Reply</button>
+			</form>
+		</div>
+	</div>
+	
+  <div class="col-2 border" style="margin-top:10px; ">
+  	<div class="row border" style="height: 250px;">ADS</div>
+  	<div class="row border" style="height: 250px; margin-top: 10px;">ADS</div>
+	</div>
+	</div>
+		
+
+<!-- End of second row -->
+
+<!-- start of third row -->
+<!--
+<div class="row">
+	<div class="col-6 border">
+		<div class="form-group" style="padding-top: 10px;"> 
+			<textarea class="form-control" placeholder="Type a messsage.." ></textarea>
+			<p></p>
+			<button type="button" class="btn btn-success float-right">Reply</button>
+		</div>
+	</div>
+	
+</div>
+-->
+<!-- End of third row -->
+<footer class="container-fluid text-center" style="margin-top:20px;height:70px; background-color: black">
+  <font color="white"><p style="padding-top:18px;">Feel Free To Reach Out To Us About Your Experience At <a href="mailto:info@meetmentor.in?Subject=My%20Experience" target="_top"><u>MeetMentor</u></a></p></font>
+</footer>
+
+
+</body>
+</html>

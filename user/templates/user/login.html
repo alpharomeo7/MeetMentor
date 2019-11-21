@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Get Started!</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+        <link rel="stylesheet" href=" {% static 'user/login/assets/bootstrap/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href=" {% static 'user/login/assets/font-awesome/css/font-awesome.min.css' %}">
+		<link rel="stylesheet" href=" {% static 'user/login/assets/css/form-elements.css' %}">
+        <link rel="stylesheet" href=" {% static 'user/login/assets/css/style.css' %}">
+        <link rel="stylesheet" type="text/css" href=" {% static 'user/login/assets/css/footer-distributed-with-address-and-phones.css' %}">
+        <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    	<link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- Favicon and touch icons -->
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="user/login/assets/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="user/login/assets/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="user/login/assets/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="user/login/assets/ico/apple-touch-icon-57-precomposed.png">
+
+    </head>
+
+    <body>
+
+        <!-- Top content -->
+        <div class="top-content" style="background-color:#6f86d6">
+
+            <div class="inner-bg">
+                <div class="container">
+
+
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2 text">
+
+							<h1 style="color:#16207a;">MeetMentor.in</h1>
+                            <h2>Get Started!</h2>
+
+                            <div class="description">
+                            	<p>
+	                            	Start your journey towards personal and professional growth with MeetMentor today!
+                            	</p>
+								<h1> {{message}} </h1>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                    	<div class="col-sm-5">
+
+                        	<div class="form-box">
+                        		<div class="form-top">
+	                        		<div class="form-top-left">
+	                        			<h3>Sign up now</h3>
+	                            		<p>Register and dive into the world of growth: </p>
+	                        		</div>
+	                        		<div class="form-top-right">
+	                        			<i class="fa fa-pencil"></i>
+	                        		</div>
+	                            </div>
+	                            <div class="form-bottom">
+				                    <form role="form" action="" method="post" class="registration-form">
+										 {% csrf_token %}
+				                    	<div class="form-group">
+				                    		<label class="sr-only" for="form-first-name">Name</label>
+				                        	<input type="text" name="name" placeholder="Name" value= "{{register_name}}"class="form-first-name form-control" id="form-first-name">
+				                        </div>
+
+				                        <div class="form-group">
+
+				                        	<input type="email" name="email" placeholder="Email" value = "{{register_email}}" class="form-email form-control" id="form-email">
+				                        </div>
+				                        <div class="form-group">
+    										<input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Password" pattern="{8,}" title="Must contain at least 8 or more characters" required>
+				                        </div>
+										 <div class="form-group">
+    										<input type="password" class="form-control" name = "confirm_password" placeholder="Confirm Password" pattern="{8,}" title="Must contain at least 8 or more characters" required>
+				                        </div>
+
+    									 <div class="form-group">
+				                          <select class="form-control" id="sel1">
+                      						<option>Mentee</option>
+
+                      					  </select>
+
+    									</div>
+
+    									<p style="font-size: 15px;"><font color="wheat">By clicking Sign Up, you agree to the MeetMentor User  Agreement, Privacy Policy, and Cookie Policy.</font></p>
+
+
+				                        <button type="submit" class="btn">Sign up</button>
+				                    </form>
+			                    </div>
+                        	</div>
+
+                        </div>
+
+                        <div class="col-sm-1 middle-border"></div>
+                        <div class="col-sm-1"></div>
+
+                        <div class="col-sm-5">
+
+                        	<div class="form-box" style="background-color:#6f86d6">
+	                        	<div class="form-top">
+	                        		<div class="form-top-left">
+	                        			<h3>Login</h3>
+	                            		<p>Enter username and password to log in:</p>
+	                        		</div>
+	                        		<div class="form-top-right">
+	                        			<i class="fa fa-lock"></i>
+	                        		</div>
+	                            </div>
+	                            <div class="form-bottom">
+				                    <form role="form" action="" method="post" class="login-form">
+										 {% csrf_token %}
+				                    	<div class="form-group">
+				                    		<label class="sr-only" for="form-username">Email</label>
+				                        	<input type="text" name="email" placeholder="Email" class="form-username form-control" id="form-username">
+				                        </div>
+				                        <div class="form-group">
+				                        	<label class="sr-only" for="form-password">Password</label>
+				                        	<input type="password" name="password" placeholder="Password" class="form-password form-control" id="form-password">
+				                        </div>
+				                        <div class="form-check term_pad">
+      										<input type="checkbox" class="form-check-input" style="padding-bottom: 20px;">
+   											<font color="white"> Remember Me </font>
+   											<p></p>
+    									</div>
+				                        <button type="submit" class="btn">Login</button>
+				                    </form>
+			                    </div>
+		                    </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer-distributed" style="margin-top: 0px;">
+
+			<div class="footer-left">
+
+				<h3>MeetMentor</h3>
+
+				<p class="footer-links">
+					<a href="#">Home</a>
+					·
+					<a href="#">About</a>
+					·
+					<a href="#">Login/Sign Up</a>
+					·
+					<a href="#">Mentor Board</a>
+					·
+					<a href="#">Contact</a>
+
+				</p>
+
+				<p class="footer-company-name">MeetMentor &copy; 2018</p>
+			</div>
+
+			<div class="footer-center">
+
+				<div>
+					<i class="fa fa-map-marker"></i>
+					<p><span>A rising startup in</span> Mumbai,India</p>
+				</div>
+
+				<!-- <div>
+					<i class="fa fa-phone"></i>
+					<p>+1 555 123456</p>
+				</div> -->
+
+				<div>
+					<i class="fa fa-envelope"></i>
+					<p><a href="mailto:info@meetmentor.in?Subject=My%20Experience">info@meetmentor.in</a></p>
+				</div>
+
+			</div>
+
+			<div class="footer-right">
+
+				<p class="footer-company-about">
+					<span>About the company</span>
+					We at MeetMentor believe that every student should have access to genuine guidance and mentorship.
+				</p>
+
+				<div class="footer-icons">
+
+					<a href="#"><i class="fa fa-facebook"></i></a>
+					<a href="#"><i class="fa fa-linkedin"></i></a>
+					<a href="#"><i class="fa fa-twitter"></i></a>
+					<a href="#"><i class="fa fa-instagram"></i></a>
+
+				</div>
+
+			</div>
+
+		</footer>
+        <!-- Javascript -->
+        <script src=" {% static 'user/login/assets/js/jquery-1.11.1.min.js' %}" ></script>
+        <script src=" {% static 'user/login/assets/bootstrap/js/bootstrap.min.js' %}"></script>
+        <script src=" {% static 'user/login/assets/js/jquery.backstretch.min.js' %}"></script>
+        <script src=" {% static 'user/login/assets/js/scripts.js' %}"></script>
+
+        <!--[if lt IE 10]>
+            <script src=" {% static 'user/login/assets/js/placeholder.js' %}"></script>
+        <![endif]-->
+
+    </body>
+
+</html>
